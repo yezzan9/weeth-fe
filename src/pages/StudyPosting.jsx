@@ -15,7 +15,7 @@ const StyledPosting = styled.div`
 const StyledText = styled.div`
   margin-left: 7%;
   color: ${theme.color.grayScale.white};
-  font-size: 16px;
+  font-size: 17px;
   line-height: 19.09px;
 `;
 
