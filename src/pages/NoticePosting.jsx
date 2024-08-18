@@ -29,6 +29,12 @@ const StyledTitle = styled.input`
   color: ${theme.color.grayScale.white};
   font-family: ${theme.font.family.pretendard_semiBold};
   outline: none;
+
+  font-size: 16px; // 확대 방지를 위한 고정 크기
+  transform: scale(
+    0.875
+  ); // 원하는 크기로 축소 (예: 14px로 보이게 하려면 14/16 = 0.875)
+  transform-origin: left top;
 `;
 
 const StyledLine = styled.div`
@@ -49,6 +55,12 @@ const StyledContent = styled.textarea`
   outline: none;
   resize: none;
   height: 455px;
+
+  font-size: 16px; // 확대 방지를 위한 고정 크기
+  transform: scale(
+    0.875
+  ); // 원하는 크기로 축소 (예: 14px로 보이게 하려면 14/16 = 0.875)
+  transform-origin: left top;
 `;
 
 const NoticePosting = () => {
