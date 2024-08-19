@@ -11,7 +11,7 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 370px;
-  margin: 10px 5% 0 5%;
+  margin: 10px 5% 10px 5%;
 `;
 
 const InputField = styled.input`
