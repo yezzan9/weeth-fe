@@ -13,6 +13,7 @@ const TypingContainer = styled.div`
   width: 100%;
   max-width: 370px;
   background-color: ${theme.color.grayScale.gray12};
+  justify-content: center; /* 추가: 입력창을 가운데 정렬 */
   padding: 10px;
   z-index: 2;
 `;
