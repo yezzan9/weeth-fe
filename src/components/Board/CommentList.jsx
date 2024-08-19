@@ -14,11 +14,10 @@ const TypingContainer = styled.div`
   background-color: ${theme.color.grayScale.gray12};
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding: 0;
   z-index: 2;
   left: 50%;
   transform: translateX(-50%); /* 가로 방향으로 정확히 중앙에 배치 */
-
   font-size: 16px;
 `;
 

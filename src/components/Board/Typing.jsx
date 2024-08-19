@@ -10,8 +10,8 @@ const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 81%;
-  margin: 10px 0 0 10%;
+  width: 370px;
+  margin: 10px 5% 0 5%;
 `;
 
 const InputField = styled.input`
