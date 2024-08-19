@@ -18,6 +18,8 @@ const TypingContainer = styled.div`
   z-index: 2;
   left: 50%;
   transform: translateX(-50%); /* 가로 방향으로 정확히 중앙에 배치 */
+
+  font-size: 16px;
 `;
 
 const CommentList = ({ noticeId, postId }) => {
