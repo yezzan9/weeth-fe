@@ -1,9 +1,21 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import BoardComment from './BoardComment';
 import Typing from './Typing';
 import { BoardContext } from '../../hooks/BoardContext';
+import theme from '../../styles/theme';
+
+const TypingContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 370px;
+  background-color: ${theme.color.grayScale.gray12};
+  padding: 10px;
+  z-index: 2;
+`;
 
 const CommentList = ({ noticeId, postId }) => {
   const [comments, setComments] = useState([]);
@@ -143,18 +155,20 @@ const CommentList = ({ noticeId, postId }) => {
           />
         );
       })}
-      <Typing
-        noticeId={noticeId}
-        postId={postId}
-        onCommentSubmitted={handleCommentSubmitted}
-        parentCommentId={replyingTo}
-        onInputFocus={() => {
-          if (!replyingTo) {
-            setReplyingTo(null); // 댓글 상태 초기화
-          }
-        }} // 입력창이 포커스될 때, 대댓글 상태 초기화
-        comment=""
-      />
+      <TypingContainer>
+        <Typing
+          noticeId={noticeId}
+          postId={postId}
+          onCommentSubmitted={handleCommentSubmitted}
+          parentCommentId={replyingTo}
+          onInputFocus={() => {
+            if (!replyingTo) {
+              setReplyingTo(null); // 댓글 상태 초기화
+            }
+          }} // 입력창이 포커스될 때, 대댓글 상태 초기화
+          comment=""
+        />
+      </TypingContainer>
     </div>
   );
 };

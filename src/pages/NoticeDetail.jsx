@@ -34,6 +34,7 @@ const NoticeRow = styled.div`
   padding: 10px 6%;
   margin-top: 90px;
   flex-grow: 1;
+  margin-bottom: 100px; /* Typing 영역과 겹치지 않도록 하단 여백 추가 */
 `;
 
 const TextContainer = styled.div`
