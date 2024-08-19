@@ -10,13 +10,14 @@ import theme from '../../styles/theme';
 const TypingContainer = styled.div`
   position: fixed;
   bottom: 0;
-  width: 100%;
-  max-width: 370px;
-  margin-left: -10px;
+  width: 370px; /* 헤더와 동일한 너비 */
   background-color: ${theme.color.grayScale.gray12};
-  justify-content: center; /* 추가: 입력창을 가운데 정렬 */
+  display: flex;
+  justify-content: center;
   padding: 10px;
   z-index: 2;
+  left: 50%;
+  transform: translateX(-50%); /* 가로 방향으로 정확히 중앙에 배치 */
 `;
 
 const CommentList = ({ noticeId, postId }) => {
