@@ -20,8 +20,6 @@ const Utils = async (response, originalApiFunc, originalParams) => {
     } else {
       // Body가 비어있다면 새로운 토큰이 있는지 확인하고, 로컬 스토리지에 저장
       console.log('utils.header', response);
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
       const newToken = response.headers.authorization;
       const newRefreshToken = response.headers.authorization_refresh;
       console.log(newToken, newRefreshToken);
