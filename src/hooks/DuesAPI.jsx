@@ -50,7 +50,13 @@ const DuesAPI = () => {
           console.error('Failed to get data:', result.message);
         }
       } catch (error) {
-        console.error('Error getting data:', error);
+        // 무한 리다이렉션 방지
+        if (window.location.pathname !== '/login') {
+          console.error('An error occurred while fetching the data');
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          window.location.href = '/login';
+        }
       }
     };
 

@@ -59,7 +59,6 @@ const App = () => {
       <NoticeProvider>
       <YearlyScheduleProvider>
       <AttendCheckProvider>
-      <UserAPI />
       <MonthlyScheduleAPI />
       <ScrollToTop />
         <Routes>
