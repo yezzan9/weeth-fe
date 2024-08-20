@@ -172,6 +172,28 @@ const CommentList = ({ noticeId, postId }) => {
     };
   }, []);
 
+  // 키보드 입력하다가 스크롤할 때 입력창 사라지는 문제
+  useEffect(() => {
+    // Focus 시 TypingContainer로 스크롤
+    const handleFocus = () => {
+      const typingContainer = document.getElementById('typingContainer');
+      if (typingContainer) {
+        typingContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    const inputElements = document.querySelectorAll('input, textarea');
+    inputElements.forEach((input) =>
+      input.addEventListener('focus', handleFocus),
+    );
+
+    return () => {
+      inputElements.forEach((input) =>
+        input.removeEventListener('focus', handleFocus),
+      );
+    };
+  }, []);
+
   return (
     <div>
       {comments.map((comment, index) => {
@@ -206,6 +228,20 @@ const CommentList = ({ noticeId, postId }) => {
           />
         );
       })}
+      <TypingContainer>
+        <Typing
+          noticeId={noticeId}
+          postId={postId}
+          onCommentSubmitted={handleCommentSubmitted}
+          parentCommentId={replyingTo}
+          onInputFocus={() => {
+            if (!replyingTo) {
+              setReplyingTo(null); // 댓글 상태 초기화
+            }
+          }} // 입력창이 포커스될 때, 대댓글 상태 초기화
+          comment=""
+        />
+      </TypingContainer>
       <TypingContainer>
         <Typing
           noticeId={noticeId}
