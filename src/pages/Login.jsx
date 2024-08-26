@@ -1,5 +1,5 @@
 /* eslint-disable react/no-children-prop */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ const Container = styled.div`
   max-width: 370px;
   height: calc(var(--vh, 1vh) * 100);
   padding-top: 0;
+  overflow: hidden;
 `;
 
 const LoginHeaderMargin = styled.div`
@@ -97,16 +98,6 @@ const Login = () => {
       email,
       password,
     };
-    const handleScroll = () => {
-      window.scrollTo(0, 0); // Ensure the view is at the top
-    };
-
-    useEffect(() => {
-      window.addEventListener('resize', handleScroll);
-      return () => {
-        window.removeEventListener('resize', handleScroll);
-      };
-    }, []);
 
     try {
       const BASE_URL = process.env.REACT_APP_BASE_URL;

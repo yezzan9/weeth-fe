@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,16 +14,8 @@ const Container = styled.div`
   flex-direction: column;
   width: 370px;
   max-width: 370px;
-  height: calc(var(--vh, 1vh) * 100);
   padding-top: 0;
-  position: relative;
-`;
-
-const HeaderContainer = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
+  overflow: hidden;
 `;
 
 const InputContainer = styled.div`
@@ -158,31 +150,19 @@ const Signup = () => {
     const pwValue = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setPassword(pwValue);
   };
-  const handleScroll = () => {
-    window.scrollTo(0, 0); // Ensure the view is at the top
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleScroll);
-    return () => {
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
 
   return (
     <Container>
-      <HeaderContainer>
-        <SignupHeader
-          isRightButtonEnabled={
-            validateEmail(email) &&
-            emailStatus !== 'duplicate' &&
-            password.trim() !== '' &&
-            isChecked &&
-            !(password.length < 4 || password.length > 8)
-          }
-          onClickTextButton={handleNextClick}
-        />
-      </HeaderContainer>
+      <SignupHeader
+        isRightButtonEnabled={
+          validateEmail(email) &&
+          emailStatus !== 'duplicate' &&
+          password.trim() !== '' &&
+          isChecked &&
+          !(password.length < 4 || password.length > 8)
+        }
+        onClickTextButton={handleNextClick}
+      />
       <InputContainer>
         <SignupTextComponent
           text="ID로 사용할 메일을 적어주세요."
