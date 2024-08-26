@@ -14,7 +14,16 @@ const Container = styled.div`
   flex-direction: column;
   width: 370px;
   max-width: 370px;
+  height: calc(var(--vh, 1vh) * 100);
   padding-top: 0;
+  position: relative;
+`;
+
+const HeaderContainer = styled.div`
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
 `;
 
 const InputContainer = styled.div`
@@ -152,16 +161,18 @@ const Signup = () => {
 
   return (
     <Container>
-      <SignupHeader
-        isRightButtonEnabled={
-          validateEmail(email) &&
-          emailStatus !== 'duplicate' &&
-          password.trim() !== '' &&
-          isChecked &&
-          !(password.length < 4 || password.length > 8)
-        }
-        onClickTextButton={handleNextClick}
-      />
+      <HeaderContainer>
+        <SignupHeader
+          isRightButtonEnabled={
+            validateEmail(email) &&
+            emailStatus !== 'duplicate' &&
+            password.trim() !== '' &&
+            isChecked &&
+            !(password.length < 4 || password.length > 8)
+          }
+          onClickTextButton={handleNextClick}
+        />
+      </HeaderContainer>
       <InputContainer>
         <SignupTextComponent
           text="ID로 사용할 메일을 적어주세요."
