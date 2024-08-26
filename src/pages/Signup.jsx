@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -158,6 +158,16 @@ const Signup = () => {
     const pwValue = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setPassword(pwValue);
   };
+  const handleScroll = () => {
+    window.scrollTo(0, 0); // Ensure the view is at the top
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
 
   return (
     <Container>
