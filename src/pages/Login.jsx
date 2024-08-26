@@ -15,6 +15,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 370px;
   max-width: 370px;
+  height: calc(var(--vh, 1vh) * 100);
   padding-top: 0;
 `;
 
