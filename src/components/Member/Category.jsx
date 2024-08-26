@@ -107,7 +107,7 @@ const Category = ({ setSelectedCardinal }) => {
 };
 
 Category.propTypes = {
-  setSelectedCardinal: PropTypes.number.isRequired,
+  setSelectedCardinal: PropTypes.func.isRequired,
 };
 
 export default Category;

@@ -71,6 +71,7 @@ const InfoInput = ({
     if (val === '') return true; // 입력값이 비어있을 경우 유효하다고 판단
     const numberRegex = /^[0-9]*$/;
     const koreanRegex = /^[ㄱ-ㅎ가-힣]*$/; // 한글만 허용하는 정규 표현식
+    const engNumRegex = /^[a-zA-Z0-9]*$/; // 영어와 숫자만 허용하는 정규 표현식
 
     switch (inputType) {
       case 'text':
@@ -85,6 +86,8 @@ const InfoInput = ({
         return numberRegex.test(val);
       case 'no-korean':
         return !koreanRegex.test(val); // 한글 포함하지 않음
+      case 'eng-num':
+        return engNumRegex.test(val); // 영어와 숫자만 허용
       default:
         return true;
     }
@@ -156,7 +159,7 @@ InfoInput.propTypes = {
   padding: PropTypes.string.isRequired,
   align: PropTypes.string.isRequired,
   edit: PropTypes.bool,
-  inputType: PropTypes.oneOf(['text', 'number', 'no-korean']),
+  inputType: PropTypes.oneOf(['text', 'number', 'no-korean', 'eng-num']),
 };
 
 export default InfoInput;

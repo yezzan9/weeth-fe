@@ -9,7 +9,7 @@ const StyledContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${(props) => (props.isYear ? '121px' : '275px')};
+  width: ${(props) => (props.isMonth ? '275px' : '121px')};
   height: 38px;
   background: ${theme.color.grayScale.gray18};
   border-radius: 14px;
@@ -38,7 +38,7 @@ const Text = styled.div`
 const ModalContent = ({
   origYear,
   origMonth,
-  isYear,
+  isMonth,
   onClickTextButton,
   editMonth,
   editYear,
@@ -47,8 +47,15 @@ const ModalContent = ({
   const [month, setMonth] = useState(origMonth);
 
   const onChangeYear = (value) => {
-    setYear(value);
-    editYear(value);
+    const numericValue = parseInt(value, 10);
+    if (!Number.isNaN(numericValue)) {
+      setYear(numericValue);
+      editYear(numericValue);
+    } else {
+      const defaultValue = 2024;
+      setYear(defaultValue);
+      editYear(defaultValue);
+    }
   };
 
   const onChangeMonth = (value) => {
@@ -56,17 +63,17 @@ const ModalContent = ({
     editMonth(value);
   };
 
-  if (isYear) {
-    // 연력일 경우
+  if (isMonth) {
+    // 달력일 경우
     return (
-      <StyledContent isYear={isYear}>
-        <YearButton>
+      <StyledContent isMonth={isMonth}>
+        <MonthButton>
           <TextButton
             text="완료"
             color="mainColor"
             onClick={onClickTextButton}
           />
-        </YearButton>
+        </MonthButton>
         <DateInput
           type="number"
           value={year}
@@ -77,15 +84,25 @@ const ModalContent = ({
           inputType="year"
         />
         <Text>년</Text>
+        <DateInput
+          type="number"
+          value={month}
+          onChange={onChangeMonth}
+          height="43px"
+          width="90px"
+          margin="10px"
+          inputType="month"
+        />
+        <Text>월</Text>
       </StyledContent>
     );
   }
-  // 달력일 경우
+  // 연력일 경우
   return (
-    <StyledContent isYear={isYear}>
-      <MonthButton>
+    <StyledContent isMonth={isMonth}>
+      <YearButton>
         <TextButton text="완료" color="mainColor" onClick={onClickTextButton} />
-      </MonthButton>
+      </YearButton>
       <DateInput
         type="number"
         value={year}
@@ -96,16 +113,6 @@ const ModalContent = ({
         inputType="year"
       />
       <Text>년</Text>
-      <DateInput
-        type="number"
-        value={month}
-        onChange={onChangeMonth}
-        height="43px"
-        width="90px"
-        margin="10px"
-        inputType="month"
-      />
-      <Text>월</Text>
     </StyledContent>
   );
 };
@@ -113,7 +120,7 @@ const ModalContent = ({
 ModalContent.propTypes = {
   origYear: PropTypes.number.isRequired,
   origMonth: PropTypes.number.isRequired,
-  isYear: PropTypes.bool.isRequired,
+  isMonth: PropTypes.bool.isRequired,
   onClickTextButton: PropTypes.func.isRequired,
   editMonth: PropTypes.func.isRequired,
   editYear: PropTypes.func.isRequired,

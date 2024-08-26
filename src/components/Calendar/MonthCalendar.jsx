@@ -178,9 +178,9 @@ const MonthCalendar = ({ year, month }) => {
     const { isMeeting } = clickInfo.event.extendedProps;
 
     if (isMeeting) {
-      navi(`/meeting/${id}`, { state: { isMeeting } });
+      navi(`/meetings/${id}`, { state: { isMeeting } });
     } else {
-      navi(`/event/${id}`, { state: { isMeeting } });
+      navi(`/events/${id}`, { state: { isMeeting } });
     }
   };
 
@@ -200,12 +200,12 @@ const MonthCalendar = ({ year, month }) => {
 
   return (
     <CalendarContainer>
+      <UserAPI />
       <MonthlyShceduleAPI
         start={formattedStart}
         end={formattedEnd}
         year={year}
       />
-      <UserAPI />
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin]}

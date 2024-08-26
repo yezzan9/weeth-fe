@@ -12,6 +12,8 @@ import { createEvent, editEvent } from '../hooks/EventAdminAPI';
 import EventInfoAPI from '../hooks/EventInfoAPI';
 import { EventInfoContext } from '../hooks/EventInfoContext';
 import useCustomBack from '../router/useCustomBack';
+import UserAPI from '../hooks/UserAPI';
+import { UserContext } from '../hooks/UserContext';
 
 const StyledCreate = styled.div`
   display: flex;
@@ -64,6 +66,13 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
+const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 50px 0px;
+  font-family: ${theme.font.family.pretendard_semiBold};
+`;
+
 const getTodayArr = () => {
   const today = new Date();
   return [
@@ -90,8 +99,8 @@ const ISOToArray = (isoString) => {
 const EventAdmin = () => {
   useCustomBack('/calendar');
 
+  const { userData } = useContext(UserContext);
   const { infoData, error } = useContext(EventInfoContext);
-  console.log(error);
   const [eventInfo, setEventInfo] = useState([
     { key: 'title', value: '' },
     { key: 'start', value: getTodayArr() },
@@ -233,27 +242,34 @@ const EventAdmin = () => {
       return;
     }
 
-    let response;
-
     if (window.confirm('저장하시겠습니까?')) {
       try {
-        if (isEditMode) response = await editEvent(data, id);
-        else response = await createEvent(data);
-
-        console.log(response);
-        console.log('전달할 데이터', data);
-
+        if (isEditMode) await editEvent(data, id);
+        else await createEvent(data);
         alert('저장이 완료되었습니다.');
         navigate('/calendar');
       } catch (err) {
-        console.error(err);
+        console.log('response', err.response);
+        if (err.response.status === 403) {
+          alert('일정 생성 및 수정은 운영진만 가능합니다.');
+          return;
+        }
         alert('저장 중 오류가 발생했습니다.');
       }
     }
   };
 
+  if (error) {
+    return null;
+  }
+
+  if (userData.role !== 'ADMIN') {
+    return <Error>일정 생성 및 수정은 운영진만 가능합니다</Error>;
+  }
+
   return (
     <StyledCreate>
+      <UserAPI />
       <EventInfoAPI id={id} />
       <Header
         title={isEditMode ? '일정 수정' : '일정 추가'}

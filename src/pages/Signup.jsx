@@ -127,6 +127,10 @@ const Signup = () => {
       alert('비밀번호를 입력해 주세요.');
       return;
     }
+    if (password.length < 4 || password.length > 8) {
+      alert('비밀번호를 4~8자리로 입력해 주세요.');
+      return;
+    }
     navi('/profile', { state: { email, password } });
   };
 
@@ -142,22 +146,8 @@ const Signup = () => {
   };
 
   const handlePasswordChange = (e) => {
-    const pwValue = e.target.value.replace(
-      /[~!@#$%";'^,&*()_+|</>=>`?:{}]/g,
-      '',
-    );
+    const pwValue = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
     setPassword(pwValue);
-  };
-
-  const getNextButtonColor = () => {
-    if (
-      !validateEmail(email) ||
-      emailStatus === 'duplicate' ||
-      password.trim() === ''
-    ) {
-      return 'white';
-    }
-    return 'green';
   };
 
   return (
@@ -167,16 +157,19 @@ const Signup = () => {
           validateEmail(email) &&
           emailStatus !== 'duplicate' &&
           password.trim() !== '' &&
-          isChecked
+          isChecked &&
+          !(password.length < 4 || password.length > 8)
         }
         onClickTextButton={handleNextClick}
-        nextButtonColor={getNextButtonColor()}
       />
       <InputContainer>
         <SignupTextComponent
-          text="ID로 사용할 메일을 적어주세요"
+          text="ID로 사용할 메일을 적어주세요."
           value={email}
           onChange={handleEmailChange}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') handleNextClick();
+          }}
           placeholder="ex) weeth@gmail.com"
           type=""
         />
@@ -196,16 +189,19 @@ const Signup = () => {
               }}
             >
               {emailStatus === 'duplicate'
-                ? '이미 가입된 ID입니다'
-                : '사용 가능한 ID입니다'}
+                ? '이미 가입된 ID입니다.'
+                : '사용 가능한 ID입니다.'}
             </MessageText>
           )}
         </ButtonContainer>
         <SignupTextComponent
-          text="사용할 비밀번호를 입력해주세요"
+          text="사용할 비밀번호를 입력해주세요."
           value={password}
           onChange={handlePasswordChange}
-          placeholder=""
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') handleNextClick();
+          }}
+          placeholder="4~8자리 / 영문 대소문자, 숫자 조합"
           type={passwordVisible ? 'text' : 'password'}
         >
           <ToggleVisibilityButton onClick={togglePasswordVisibility}>

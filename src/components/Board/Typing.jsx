@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { ReactComponent as RegisterComment } from '../../assets/images/ic_send.svg';
-import Utils, { replaceNewLines } from '../../hooks/Utils';
+import { replaceNewLines } from '../../hooks/Utils';
 import theme from '../../styles/theme';
 
 const InputWrapper = styled.div`
@@ -24,7 +24,7 @@ const InputField = styled.input`
   font-size: 16px; // 확대 방지를 위해 16px로 설정
   font-family: ${theme.font.family.pretendard_semiBold};
   outline: none;
-  padding: 0 48% 0 5%;
+  padding: 0 10% 0 5%;
 
   &::placeholder {
     color: ${theme.color.grayScale.white};
@@ -92,35 +92,18 @@ const Typing = ({
         },
       );
 
-      // Utils를 사용하여 토큰 만료 시 재시도 로직 추가
-      const finalResponse = await Utils(
-        response,
-        axios.post,
-        [
-          url,
-          { content: processedComment, parentCommentId },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
-            },
-          },
-        ],
-        null, // navigate는 여기서 사용되지 않으므로 null로 전달
-      );
-
-      if (finalResponse.data.code === 200) {
+      if (response.data.code === 200) {
         console.log('댓글이 성공적으로 등록되었습니다.');
         setComment(''); // 입력 필드 초기화
-        console.log('onCommentSubmitted 호출 전:', finalResponse.data.data);
-        onCommentSubmitted(finalResponse.data.data); // 새로운 댓글 데이터를 부모 컴포넌트로 전달
+        console.log('onCommentSubmitted 호출 전:', response.data.data);
+        onCommentSubmitted(response.data.data); // 새로운 댓글 데이터를 부모 컴포넌트로 전달
         if (parentCommentId) {
-          console.log('대댓글이 등록되었습니다:', finalResponse.data.data);
+          console.log('대댓글이 등록되었습니다:', response.data.data);
         } else {
-          console.log('일반 댓글이 등록되었습니다:', finalResponse.data.data);
+          console.log('일반 댓글이 등록되었습니다:', response.data.data);
         }
       } else {
-        console.error('응답에서 오류 발생:', finalResponse.data.message);
+        console.error('응답에서 오류 발생:', response.data.message);
       }
     } catch (error) {
       console.error('댓글을 게시하는 데 실패했습니다:', error);

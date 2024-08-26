@@ -38,7 +38,6 @@ const Footer = styled.footer`
 
 const Home = () => {
   useCustomBack('/home');
-
   // const accessToken = localStorage.getItem('accessToken');
   // const refreshToken = localStorage.getItem('refreshToken');
   // console.log('home token', accessToken, refreshToken);

@@ -9,7 +9,7 @@ const BasicButton = styled.button`
   height: 33px;
   background-color: ${({ theme, color }) => color || theme.color.grayScale.gray30};
   font-family: ${({ theme }) => theme.font.family.pretendard_semiBold};
-  color: ${({ theme, textColor }) => textColor || theme.color.grayScale.white};
+  color: ${({ theme, textcolor }) => textcolor || theme.color.grayScale.white};
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -24,8 +24,8 @@ const BasicButton = styled.button`
   }
 `;
 
-const SmallImageButton = ({ children, color, textColor, icon, altText }) => (
-  <BasicButton color={color} textColor={textColor}>
+const SmallImageButton = ({ children, color, textcolor, icon, altText }) => (
+  <BasicButton color={color} textcolor={textcolor}>
     {icon ? <img src={icon} alt={altText || 'icon'} /> : children}
   </BasicButton>
 );

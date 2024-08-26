@@ -12,7 +12,7 @@ import MyPageHeader from '../components/MyPage/MyPageHeader';
 import InfoInput from '../components/MyPage/InfoInput';
 // import mockUser from '../components/mockData/mockUser';
 import DropdownMenu from '../components/DropdownMenu';
-
+import UserAPI from '../hooks/UserAPI';
 import { UserContext } from '../hooks/UserContext';
 import useCustomBack from '../router/useCustomBack';
 
@@ -78,6 +78,25 @@ const Edit = () => {
         return acc;
       }, {});
 
+      const password = userInfo.find((item) => item.key === 'password').value;
+      if (password.length < 4 || password.length > 8) {
+        alert('비밀번호를 4~8자리로 입력해 주세요.');
+        return;
+      }
+
+      if (userInfo.some((item) => !item.value)) {
+        alert('모든 항목을 입력해 주세요.');
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      for (const item of userInfo) {
+        if (item.key === 'email' && !emailRegex.test(item.value)) {
+          alert('올바른 이메일 형식이 아닙니다.');
+          return;
+        }
+      }
+
       response = await axios.patch(`${BASE_URL}/api/v1/users`, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -86,19 +105,6 @@ const Edit = () => {
       });
     } catch (err) {
       alert('저장 중 오류가 발생했습니다.');
-    }
-
-    if (userInfo.some((item) => !item.value)) {
-      alert('모든 항목을 입력해 주세요.');
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    for (const item of userInfo) {
-      if (item.key === 'email' && !emailRegex.test(item.value)) {
-        alert('올바른 이메일 형식이 아닙니다.');
-        return;
-      }
     }
 
     if (response.data.code === 400) {
@@ -118,10 +124,9 @@ const Edit = () => {
 
   return (
     <StyledEdit>
+      <UserAPI />
       <MyPageHeader isEdit userInfo={userInfo} onSave={onSave} />
-      {error || !userData ? (
-        <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
-      ) : (
+      {!error && userData ? (
         <InfoWrapper>
           <InfoInput
             text="이름"
@@ -202,12 +207,14 @@ const Edit = () => {
             editValue={(value) => editValue('password', value)}
             width="191px"
             padding="25px"
-            placeholder=""
+            placeholder="영문, 숫자 4~8자리"
             align="right"
             edit={false}
-            inputType="no-korean"
+            inputType="eng-num"
           />
         </InfoWrapper>
+      ) : (
+        <Error>데이터를 불러오는 중 문제가 발생했습니다.</Error>
       )}
     </StyledEdit>
   );

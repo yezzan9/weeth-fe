@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../styles/theme';
 import Button from '../components/Button/Button';
 import leets from '../assets/images/ic_name_logo.svg';
 import useCustomBack from '../router/useCustomBack';
-
-/* 높이를 810px로 잡고 각각의 margin을 px로 잡았습니다 */
 
 const Container = styled.div`
   display: flex;
@@ -32,11 +30,11 @@ const ButtonWrapper = styled.div`
 `;
 
 const SignupButton = styled(Button)`
-  width: 100%; /* Adjusted width */
+  width: 100%;
 `;
 
 const LoginButton = styled(Button)`
-  width: 100%; /* Adjusted width */
+  width: 100%;
   margin-bottom: 198px;
 `;
 
@@ -45,7 +43,14 @@ const Landing = () => {
 
   const [signupClicked, setSignupClicked] = useState(false);
   const [loginClicked, setLoginClicked] = useState(false);
-  const navi = useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,13 +60,15 @@ const Landing = () => {
         </StyledTitle>
         <ButtonWrapper>
           <SignupButton
-            color={signupClicked ? '#0E9871' : theme.color.main.mainColor}
-            textcolor={
-              signupClicked ? '#097154' : theme.color.grayScale.white
-            } /* Temporary colors */
+            color={
+              signupClicked
+                ? theme.color.main.selectedMain
+                : theme.color.main.mainColor
+            }
+            textcolor={signupClicked ? '#097154' : theme.color.grayScale.white}
             onClick={() => {
               setSignupClicked(true);
-              navi(`/signup`);
+              navigate('/signup');
             }}
           >
             회원가입
@@ -76,10 +83,10 @@ const Landing = () => {
               loginClicked
                 ? theme.color.grayScale.gray12
                 : theme.color.grayScale.white
-            } /* Temporary colors */
+            }
             onClick={() => {
               setLoginClicked(true);
-              navi(`/login`); /* 경로 바꾸면 나중에 수정하기 */
+              navigate('/login');
             }}
           >
             로그인
