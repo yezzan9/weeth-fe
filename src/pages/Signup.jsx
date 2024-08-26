@@ -16,6 +16,8 @@ const Container = styled.div`
   max-width: 370px;
   padding-top: 0;
   overflow: hidden;
+  min-height: 812px;
+  max-height: 812px;
 `;
 
 const InputContainer = styled.div`

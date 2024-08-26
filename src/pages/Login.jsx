@@ -18,6 +18,8 @@ const Container = styled.div`
   height: calc(var(--vh, 1vh) * 100);
   padding-top: 0;
   overflow: hidden;
+  min-height: 812px;
+  max-height: 812px;
 `;
 
 const LoginHeaderMargin = styled.div`
