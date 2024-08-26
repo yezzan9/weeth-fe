@@ -18,7 +18,7 @@ const WaveImg = styled.img`
 `;
 
 const DatePicker = ({ status, onDateChange, date }) => {
-  console.log('date', date);
+  // console.log('date', date[0]);
   return (
     <StyledPicker>
       {status === 'start' ? (

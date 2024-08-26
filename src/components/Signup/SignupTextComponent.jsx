@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -65,6 +66,7 @@ const SignupTextComponent = ({
   placeholder,
   type,
   children,
+  onKeyPress,
 }) => {
   return (
     <SignupContainer>
@@ -76,6 +78,7 @@ const SignupTextComponent = ({
         <StyledTextInput
           value={value}
           onChange={onChange}
+          onKeyPress={onKeyPress}
           placeholder={placeholder}
           type={type}
         />

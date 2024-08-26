@@ -70,12 +70,12 @@ const monthModalStyles = {
   },
 };
 
-const CalendarHeader = ({ month, year, isYear, editYear, editMonth }) => {
+const CalendarHeader = ({ month, year, isMonth, editYear, editMonth }) => {
   const [monthModalIsOpen, setMonthModalIsOpen] = useState(false);
   const { userData, error } = useContext(UserContext);
   const navi = useNavigate();
 
-  console.log('userData', userData);
+  // console.log('userData', userData);
 
   const openMonthModal = () => {
     setMonthModalIsOpen(true);
@@ -88,12 +88,27 @@ const CalendarHeader = ({ month, year, isYear, editYear, editMonth }) => {
     closeMonthModal();
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  let adminButton;
 
-  if (!userData) {
-    return <div>Loading...</div>;
+  // userData를 받아오지 못한 경우 아무것도 렌더링하지 않음
+  if (!userData && !error) {
+    adminButton = null;
+  }
+  // 에러가 발생한 경우 아무것도 렌더링하지 않음
+  else if (error) {
+    adminButton = null;
+  }
+  // userData를 잘 받아왔고, 해당 user의 role이 ADMIN이라면 어드민 버튼 렌더링
+  else if (userData.role === 'ADMIN' && !monthModalIsOpen) {
+    adminButton = (
+      <PlusButton
+        src={icPlus}
+        alt="+"
+        onClick={() => {
+          navi('/event/create');
+        }}
+      />
+    );
   }
 
   return (
@@ -101,21 +116,12 @@ const CalendarHeader = ({ month, year, isYear, editYear, editMonth }) => {
       <LeftButton />
       <TitleWrapper>
         <TitleYear>{year}년</TitleYear>
-        <TitleMonth>{isYear ? null : `${month}월`}</TitleMonth>
+        <TitleMonth>{isMonth ? `${month}월` : null}</TitleMonth>
         <ImgButton onClick={openMonthModal}>
           <img src={under} alt="select" />
         </ImgButton>
       </TitleWrapper>
-      {userData.role === 'ADMIN' && !monthModalIsOpen ? (
-        <PlusButton
-          src={icPlus}
-          alt="+"
-          onClick={() => {
-            navi('/event/create');
-          }}
-        />
-      ) : null}
-
+      {adminButton}
       <Modal
         className="calendar-modal"
         isOpen={monthModalIsOpen}
@@ -125,7 +131,7 @@ const CalendarHeader = ({ month, year, isYear, editYear, editMonth }) => {
         <ModalMonthContent
           origYear={year}
           origMonth={month}
-          isYear={isYear}
+          isMonth={isMonth}
           onClickTextButton={onClickTextButton}
           editYear={editYear}
           editMonth={editMonth}
@@ -138,7 +144,7 @@ const CalendarHeader = ({ month, year, isYear, editYear, editMonth }) => {
 CalendarHeader.propTypes = {
   month: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
-  isYear: PropTypes.bool.isRequired,
+  isMonth: PropTypes.bool.isRequired,
   editYear: PropTypes.func.isRequired,
   editMonth: PropTypes.func.isRequired,
 };

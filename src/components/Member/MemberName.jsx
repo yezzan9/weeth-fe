@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,12 @@ const MemberWrapper = styled.div`
   padding: 20px 10px 0px 10px;
   font-family: ${theme.font.family.pretendard_regular};
   font-size: 16px;
+  background-color: ${theme.color.grayScale.gray18};
+
+  &:first-of-type {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
 `;
 
 const MemberContent = styled.div`
@@ -45,6 +52,7 @@ const MemberName = ({
   email,
   cardinal,
   position,
+  isLast = false,
 }) => {
   let imgSrc;
   let alt;
@@ -79,7 +87,7 @@ const MemberName = ({
           <Caption>{cardinal[0]}기</Caption>
         </TextWrapper>
       </MemberContent>
-      <Line />
+      {!isLast && <Line />}
     </MemberWrapper>
   );
 };
@@ -91,6 +99,7 @@ MemberName.propTypes = {
   email: PropTypes.string.isRequired,
   cardinal: PropTypes.number.isRequired,
   position: PropTypes.string.isRequired,
+  isLast: PropTypes.bool,
 };
 
 export default MemberName;

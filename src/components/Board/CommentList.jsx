@@ -6,7 +6,6 @@ import BoardComment from './BoardComment';
 import Typing from './Typing';
 import { UserContext } from '../../hooks/UserContext';
 import { BoardContext } from '../../hooks/BoardContext';
-import Utils from '../../hooks/Utils';
 import theme from '../../styles/theme';
 
 const TypingContainer = styled.div`
@@ -118,27 +117,20 @@ const CommentList = ({ noticeId, postId }) => {
           },
         });
 
-        const finalResponse = await Utils(response, axios.delete, [
-          url,
-          { headers: { Authorization: `Bearer ${accessToken}` } },
-        ]);
+        console.log(`DELETE request response:`, response);
 
-        console.log(`DELETE request finalResponse:`, finalResponse);
-
-        if (finalResponse.status === 200 && finalResponse.data.code === 200) {
+        if (response.status === 200 && response.data.code === 200) {
           alert('댓글이 삭제되었습니다.');
 
           await fetchComments();
         } else {
-          console.error('서버 응답 오류:', finalResponse.data.message);
+          console.error('서버 응답 오류:', response.data.message);
           alert('댓글 삭제에 실패했습니다. 다시 시도해주세요.');
         }
       } catch (error) {
-        if (error.finalResponse) {
-          console.error('서버 오류:', error.finalResponse.data);
-          alert(
-            `댓글 삭제에 실패했습니다: ${error.finalResponse.data.message}`,
-          );
+        if (error.response) {
+          console.error('서버 오류:', error.response.data);
+          alert(`댓글 삭제에 실패했습니다: ${error.response.data.message}`);
         } else {
           console.error('요청 오류:', error.message);
           alert('댓글 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -172,27 +164,9 @@ const CommentList = ({ noticeId, postId }) => {
     };
   }, []);
 
-  // 키보드 입력하다가 스크롤할 때 입력창 사라지는 문제
-  useEffect(() => {
-    // Focus 시 TypingContainer로 스크롤
-    const handleFocus = () => {
-      const typingContainer = document.getElementById('typingContainer');
-      if (typingContainer) {
-        typingContainer.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
-
-    const inputElements = document.querySelectorAll('input, textarea');
-    inputElements.forEach((input) =>
-      input.addEventListener('focus', handleFocus),
-    );
-
-    return () => {
-      inputElements.forEach((input) =>
-        input.removeEventListener('focus', handleFocus),
-      );
-    };
-  }, []);
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

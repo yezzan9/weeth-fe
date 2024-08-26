@@ -51,10 +51,19 @@ const DateInput = ({
     if (val === '') return true; // Allow empty value for clearing input
     switch (inputType) {
       case 'year':
-        return val.length <= 4 && val >= 2020 && val <= 2040; // 2020년부터 2040년까지 입력가능
+        return (
+          typeof val === 'string' &&
+          val.length <= 4 &&
+          val >= 2020 &&
+          val <= 2040
+        ); // 최대 4자리
       case 'month':
         return val >= 1 && val <= 12; // 1~12 사이
       case 'day':
+        if (year && month) {
+          const maxDays = getMaxDaysInMonth(year, month);
+          return val >= 1 && val <= maxDays;
+        }
         return val >= 1 && val <= 31; // 기본 1~31 사이
       case 'hour':
         return val >= 0 && val <= 23; // 0~23 사이
@@ -65,15 +74,22 @@ const DateInput = ({
     }
   };
 
+  useEffect(() => {
+    // value가 변경될 때만 date 상태를 업데이트
+    if (checkValidDate(value)) {
+      setDate(value);
+    }
+  }, [value]);
+
   const onChangeValue = (e) => {
     const val = e.target.value;
-    setDate(val);
-    onChange(val);
+    setDate(val); // 우선 상태값을 설정
+    // 유효성 검사는 onBlur에서만 처리
   };
 
   const onBlur = () => {
     if (!checkValidDate(date)) {
-      let validDate = value;
+      let validDate = value; // 유효하지 않다면 원래 값을 복구
       switch (inputType) {
         case 'year':
           validDate = Math.min(Math.max(date, 2020), 2040);
@@ -84,13 +100,11 @@ const DateInput = ({
         case 'day':
           if (year && month) {
             const maxDays = getMaxDaysInMonth(year, month);
-            console.log('maxdays', month);
             validDate = Math.min(Math.max(date, 1), maxDays);
           } else {
-            validDate = Math.min(Math.max(date, 1), 31); // year와 month가 없는 경우 최대 31일까지 허용
+            validDate = Math.min(Math.max(date, 1), 31);
           }
           break;
-
         case 'hour':
           validDate = Math.min(Math.max(date, 0), 23);
           break;
@@ -102,12 +116,10 @@ const DateInput = ({
       }
       setDate(validDate);
       onChange(validDate);
+    } else {
+      onChange(date); // 유효하다면 그대로 부모 컴포넌트에 전달
     }
   };
-
-  useEffect(() => {
-    setDate(value);
-  }, [value]);
 
   return (
     <div>
@@ -119,7 +131,6 @@ const DateInput = ({
         width={width}
         height={height}
         margin={margin}
-        // 년도는 4자리로만 입력할 수 있음
         min={inputType === 'year' ? '1000' : undefined}
         max={inputType === 'year' ? '9999' : undefined}
       />

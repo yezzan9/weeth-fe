@@ -23,8 +23,10 @@ const EventInfoAPI = ({ id }) => {
           });
           if (response.data.code === 200) {
             setInfoData(response.data.data);
+            // console.log(response);
           } else {
             setError(response.data.message);
+            // console.log(response);
           }
         }
       } catch (err) {

@@ -44,7 +44,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const { email, password } = location.state || { email: '', password: '' };
 
-  console.log(email, password);
   const [memberInfo, setMemberInfo] = useState({ email, password });
   const [isNextEnabled, setIsNextEnabled] = useState(false);
 
@@ -62,6 +61,15 @@ const Profile = () => {
         memberInfo[field].trim() !== '',
     );
 
+    if (memberInfo.studentId && memberInfo.studentId.trim().length < 9) {
+      alert('올바른 학번을 입력해 주세요.');
+      return;
+    }
+    if (memberInfo.tel && memberInfo.tel.trim().length < 11) {
+      alert('올바른 휴대폰 번호를 입력해 주세요.');
+      return;
+    }
+
     if (!allFieldsFilled) {
       alert('입력되지 않은 값이 있습니다.');
       return;
@@ -71,6 +79,7 @@ const Profile = () => {
       ...memberInfo,
       position: roleMapping[memberInfo.position] || memberInfo.position, // Map the role value
     };
+
     try {
       const BASE_URL = process.env.REACT_APP_BASE_URL;
       const response = await axios.post(

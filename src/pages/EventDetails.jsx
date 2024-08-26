@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import icCalendar from '../assets/images/ic_date.svg';
 import icClock from '../assets/images/ic_clock.svg';
 import theme from '../styles/theme';
-import BoardTitle from '../components/BoardTitle';
+import EventDetailTitle from '../components/Calendar/EventDetailTitle';
 import EventInfoAPI from '../hooks/EventInfoAPI';
 import useCustomBack from '../router/useCustomBack';
+import UserAPI from '../hooks/UserAPI';
 
 const StyledEventDetails = styled.div`
   width: 370px;
@@ -48,11 +49,10 @@ const EventDetails = () => {
   useCustomBack('/calendar');
 
   const { id } = useParams();
+  const { type } = useParams();
   const [eventDetailData, setEventDetailData] = useState(null);
   const [error, setError] = useState(null);
-  const location = useLocation();
-  const { isMeeting } = location.state || {};
-  const apiType = isMeeting ? 'meetings' : 'events';
+  const isMeeting = type === 'meetings';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,12 +68,9 @@ const EventDetails = () => {
         };
 
         if (id) {
-          const response = await axios.get(
-            `${BASE_URL}/api/v1/${apiType}/${id}`,
-            {
-              headers,
-            },
-          );
+          const response = await axios.get(`${BASE_URL}/api/v1/${type}/${id}`, {
+            headers,
+          });
           if (response.data.code === 200) {
             console.log('response detail data:', response.data.data); // 데이터 확인용
             setEventDetailData(response.data.data);
@@ -122,8 +119,9 @@ const EventDetails = () => {
 
   return (
     <StyledEventDetails>
+      <UserAPI />
       <EventInfoAPI id={id} />
-      <BoardTitle
+      <EventDetailTitle
         id={eventDetailData.id}
         text={eventDetailData.title}
         writer={eventDetailData.name}

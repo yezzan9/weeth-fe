@@ -6,6 +6,7 @@ import AttendMain from '../components/Attendance/AttendMain';
 import { PenaltyProvider } from '../hooks/PenaltyContext';
 import { AttendProvider } from '../hooks/AttendContext';
 import useCustomBack from '../router/useCustomBack';
+import UserAPI from '../hooks/UserAPI';
 
 const Container = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const Attendance = () => {
   useCustomBack('/home');
   return (
     <ThemeProvider theme={theme}>
+      <UserAPI />
       <AttendProvider>
       <PenaltyProvider>
       <Container>

@@ -91,6 +91,12 @@ const FileAttachMenu = ({ isOpen, onClose, onFilesChange = () => {} }) => {
       name: file.name,
     }));
 
+    // 현재 첨부된 파일 개수와 새로 추가하려는 파일 개수를 합산하여 2개를 넘지 않도록 제한
+  if (attachments.length + newFiles.length > 2) {
+    alert('파일은 최대 2개까지만 첨부할 수 있습니다.');
+    return;
+  }
+
     setAttachments((prevAttachments) => [...prevAttachments, ...newFiles]);
   };
 

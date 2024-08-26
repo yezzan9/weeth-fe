@@ -15,12 +15,12 @@ const BoardContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: 87px;
   margin: 0 7%;
-  padding: 10px 0;
+  padding: 10px 0 0 0;
   position: relative;
   border-bottom: 1px solid ${theme.color.grayScale.gray65};
   overflow: hidden; /* 컨텐츠가 컨테이너를 넘어가지 않도록 설정 */
+  height: auto; /* Let the height adjust automatically */
 `;
 
 const TopRow = styled.div`
@@ -30,18 +30,17 @@ const TopRow = styled.div`
   width: 100%;
 `;
 
-const StyledText = styled.div`
+const StyledContent = styled.div`
   color: ${theme.color.grayScale.white};
-  font-family: ${theme.font.family.pretendard_semiBold};
-  font-size: 16px;
+  font-size: 15px;
   line-height: 19.09px;
-  cursor: pointer;
 `;
 
 const StyledName = styled.div`
   display: flex;
   align-items: flex-start;
   width: 57%;
+  margin: 7px 0 7px 0;
 `;
 
 const StyledDate = styled.div`
@@ -49,11 +48,16 @@ const StyledDate = styled.div`
   font-family: ${theme.font.family.pretendard_regular};
   font-size: 12px;
   line-height: 14.32px;
+  margin: 5px 0 0 0;
 `;
 
 const StyledNotice = styled.div`
-  width: 100%; //
-  margin: 5px 0 10px 0; // 5px 15% 10px 0;
+  width: 100%;
+  color: ${theme.color.grayScale.white};
+  font-family: ${theme.font.family.pretendard_semiBold};
+  font-size: 16px;
+  line-height: 19.09px;
+  margin: 5px 0 8px 0; // 5px 15% 10px 0;
 `;
 
 const ContentRow = styled.div`
@@ -74,14 +78,15 @@ const NoticeContent = styled.div`
 `;
 
 // 문자열을 10글자로 제한하고, 넘어가면 "..." 추가
-// const truncateText = (text, maxLength) => {
-//   return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
-// };
+const truncateText = (text, maxLength) => {
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+};
 
 const BottomRow = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin: 7px 0 0 0;
 `;
 
 const CommentCount = styled.div`
@@ -113,16 +118,14 @@ const BoardComponent = ({
     <Container onClick={onClick}>
       <BoardContainer>
         <TopRow>
-          <StyledName>
-            <StyledText>{name}</StyledText>
-          </StyledName>
+          <StyledNotice>{truncateText(title, 50)}</StyledNotice>
           <StyledDate>{formatDate(time)}</StyledDate>
         </TopRow>
-        <StyledNotice>
-          <StyledText>{title}</StyledText>
-        </StyledNotice>
+        <StyledContent>{truncateText(content, 50)}</StyledContent>
         <ContentRow>
-          <NoticeContent>{content}</NoticeContent>
+          <StyledName>
+            <NoticeContent>{name}</NoticeContent>
+          </StyledName>
           <BottomRow>
             <BoardChat />
             <CommentCount>

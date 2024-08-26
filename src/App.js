@@ -32,23 +32,17 @@ import theme from './styles/theme';
 import Receipt from './pages/Receipt';
 
 import { UserProvider } from './hooks/UserContext';
-import UserAPI from './hooks/UserAPI';
 import { MonthlyScheduleProvider } from './hooks/MonthlyScheduleContext';
-import MonthlyScheduleAPI from './hooks/MonthlyScheduleAPI';
 import { BoardProvider } from './hooks/BoardContext';
 import { DuesProvider } from './hooks/DuesContext';
 import { EventInfoProvider } from './hooks/EventInfoContext';
 import { NoticeProvider } from './hooks/NoticeContext';
 import { YearlyScheduleProvider } from './hooks/YearlyScheduleContext';
-import { AttendProvider } from './hooks/AttendContext';
 import { AttendCheckProvider } from './hooks/AttendCheckContext';
-import PrivateRoute from './router/PrivateRouter';
-import { PenaltyProvider } from './hooks/PenaltyContext';
 
 import ScrollToTop from './router/ScrollToTop';
 
 const App = () => {
-  const access = localStorage.getItem('accessToken');
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
@@ -59,15 +53,13 @@ const App = () => {
       <NoticeProvider>
       <YearlyScheduleProvider>
       <AttendCheckProvider>
-      <MonthlyScheduleAPI />
       <ScrollToTop />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/attendance" element={<Attendance />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/meeting/:id" element={<EventDetails />} />
-          <Route path="/event/:id" element={<EventDetails />} />
+          <Route path="/:type/:id" element={<EventDetails />} />
           <Route path="/event/create" element={<EventAdmin />} />
           <Route path="/event/:id/edit" element={<EventAdmin />} />
           <Route path="/home" element={<Home />} />

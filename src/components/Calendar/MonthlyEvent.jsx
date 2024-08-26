@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import theme from '../../styles/theme';
 import icDot from '../../assets/images/ic_dot.svg';
 import { YearlyScheduleContext } from '../../hooks/YearlyScheduleContext';
-import YearlyScheduleAPI from '../../hooks/YearlyScheduleAPI';
 
 const StyledYear = styled.div`
   display: flex;
@@ -60,21 +59,10 @@ EventComponent.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-const MonthlyEvent = ({ thisMonth, year }) => {
-  const { yearScheduleData, error } = useContext(YearlyScheduleContext);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!yearScheduleData) {
-    return <div>Loading...</div>;
-  }
-
+const MonthlyEvent = ({ thisMonth, year, events }) => {
   const todayMonth = new Date().getMonth() + 1;
   const todayYear = new Date().getFullYear();
   const istoday = thisMonth === todayMonth && todayYear === year;
-  const events = yearScheduleData[thisMonth] || [];
 
   return (
     <StyledYear>
@@ -95,6 +83,15 @@ const MonthlyEvent = ({ thisMonth, year }) => {
 MonthlyEvent.propTypes = {
   thisMonth: PropTypes.number.isRequired,
   year: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      start: PropTypes.string.isRequired,
+      end: PropTypes.string.isRequired,
+      isMeeting: PropTypes.bool.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default MonthlyEvent;

@@ -156,14 +156,14 @@ const HomeFooter = () => {
           href="https://www.leets.land/project/12"
           target="_blank"
         >
-          <span>weeth</span>
+          <span>Weeth</span>
         </GridItemWithImage>
         <GridItemWithImage
           image={commitato}
           href="https://www.leets.land/project/13"
           target="_blank"
         >
-          <span>Commitato</span>
+          <span>COMMITATO</span>
         </GridItemWithImage>
         <GridItemWithImage
           image={moodmate}
