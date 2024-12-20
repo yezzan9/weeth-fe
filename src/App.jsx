@@ -21,6 +21,7 @@ import Profile from '@/pages/Profile';
 import Receipt from '@/pages/Receipt';
 import Signup from '@/pages/Signup';
 import theme from '@/styles/theme';
+import Redirect from '@/pages/Redirect';
 
 import AdminAttendance from '@/pages/admin/AdminAttendance';
 import AdminMember from '@/pages/admin/AdminMember';
@@ -63,6 +64,7 @@ const App = () => {
           <Route path="/admin/dues" element={<AdminDues />} />
           <Route path="/admin/penalty" element={<AdminPenatly />} />
           <Route path="/study/detail" element={<PostDetail />} />
+          <Route path="/kakao/oauth" element={<Redirect />} />
         </Routes>
       </UserProvider>
     </ThemeProvider>

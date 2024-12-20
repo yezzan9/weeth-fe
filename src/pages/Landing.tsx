@@ -3,10 +3,19 @@ import useCustomBack from '@/hooks/useCustomBack';
 import theme from '@/styles/theme';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import logo from '@/assets/images/logo/logo_full_Xmas.svg';
+import kakao from '@/assets/images/ic_KAKAO_symbol.svg';
 
-// Styled Components
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,30 +30,41 @@ const StyledTitle = styled.div`
   text-align: center;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div<{ visible: boolean }>`
   margin-top: 112px;
-  display: flex;
+  display: ${({ visible }) => (visible ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
   width: 100%;
   gap: 15px;
+
+  ${({ visible }) =>
+    visible &&
+    css`
+      animation: ${fadeIn} 2s ease-in-out forwards;
+    `}
 `;
 
-const SignupButton = styled(Button)`
+const KakaoLoginButton = styled(Button)`
   width: 100%;
 `;
 
-const LoginButton = styled(Button)`
-  width: 100%;
+const SignUpbutton = styled.button`
   margin-bottom: 198px;
+  all: unset;
+  text-color: ${theme.color.gray[100]};
+  border-bottom: 1px solid ${theme.color.gray[100]};
 `;
 
 const Landing: React.FC = () => {
   useCustomBack('/');
 
-  const [signupClicked, setSignupClicked] = useState<boolean>(false);
-  const [loginClicked, setLoginClicked] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [showButtonWrapper, setShowButtonWrapper] = useState(false);
+
+  const CLIENT_ID = import.meta.env.VITE_KAKAO_CLIENT_ID;
+  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -53,36 +73,42 @@ const Landing: React.FC = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowButtonWrapper(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Container>
       <StyledTitle>
         <img src={logo} alt="leets로고" />
       </StyledTitle>
-      <ButtonWrapper>
-        <SignupButton
-          color={signupClicked ? theme.color.mainMiddle : theme.color.main}
-          textcolor={
-            signupClicked ? theme.color.mainDark : theme.color.gray[100]
-          }
+      <ButtonWrapper visible={showButtonWrapper}>
+        <KakaoLoginButton
+          color={theme.color.kakao}
+          textcolor="#000000"
           onClick={() => {
-            setSignupClicked(true);
-            navigate('/signup');
+            window.location.href = kakaoURL;
           }}
         >
-          회원가입
-        </SignupButton>
-        <LoginButton
-          color={loginClicked ? theme.color.gray[20] : theme.color.gray[30]}
-          textcolor={
-            loginClicked ? theme.color.gray[12] : theme.color.gray[100]
-          }
+          <img
+            src={kakao}
+            alt="카카오"
+            style={{
+              marginRight: '10px',
+            }}
+          />
+          카카오로 로그인
+        </KakaoLoginButton>
+        <SignUpbutton
           onClick={() => {
-            setLoginClicked(true);
-            navigate('/login');
+            window.location.href = kakaoURL;
           }}
         >
-          로그인
-        </LoginButton>
+          신규 회원가입
+        </SignUpbutton>
       </ButtonWrapper>
     </Container>
   );
