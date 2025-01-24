@@ -29,6 +29,15 @@ export const ButtonContainer = styled.div`
 export const NameText = styled.div`
   font-family: ${theme.font.semiBold};
   font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const PositionIcon = styled.img`
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
 `;
 
 export const ContentText = styled.div`

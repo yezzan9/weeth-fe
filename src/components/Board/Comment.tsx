@@ -5,6 +5,7 @@ import deleteComment from '@/api/deleteComment';
 import { useState } from 'react';
 import formatDateTime from '@/hooks/formatDateTime';
 import useGetUserName from '@/hooks/useGetUserName';
+import setPositionIcon from '@/hooks/setPositionIcon';
 
 interface CommentProps {
   name: string;
@@ -13,6 +14,8 @@ interface CommentProps {
   postId: number;
   commentId: number;
   path: string;
+  position: string;
+  role: string;
   onDelete: () => void;
   onReply: (commentId: number) => void;
 }
@@ -24,6 +27,8 @@ const Comment = ({
   postId,
   commentId,
   path,
+  position,
+  role,
   onDelete,
   onReply,
 }: CommentProps) => {
@@ -48,7 +53,13 @@ const Comment = ({
   return (
     <S.CommentContainer isHighlighted={isHighlighted}>
       <S.CommentContentContainer>
-        <S.NameText>{name}</S.NameText>
+        <S.NameText>
+          <S.PositionIcon
+            src={setPositionIcon(role, position)}
+            alt="포지션 아이콘"
+          />
+          {name}
+        </S.NameText>
         <S.ContentText>{content}</S.ContentText>
         <S.DateText>{formattedTime}</S.DateText>
       </S.CommentContentContainer>

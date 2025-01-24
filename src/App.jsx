@@ -27,11 +27,11 @@ import AdminPenalty from '@/pages/admin/AdminPenalty';
 
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import NoticeBoard from '@/pages/NoticeBoard';
+import Notice from '@/pages/Notice';
 import NoticePostDetail from '@/pages/NoticePostDetail';
-import StudyPostDetail from '@/pages/StudyPostDetail';
-import StudyBoard from '@/pages/StudyBoard';
-import BoardPost from './pages/BoardPost';
+import BoardPostDetail from '@/pages/BoardPostDetail';
+import Board from '@/pages/Board';
+import BoardPost from '@/pages/BoardPost';
 
 const App = () => {
   return (
@@ -57,10 +57,10 @@ const App = () => {
         <Route path="/dues" element={<Dues />} />
         <Route path="/receipt" element={<Receipt />} />
 
-        <Route path="/notice" element={<NoticeBoard />} />
+        <Route path="/notice" element={<Notice />} />
         <Route path="/notice/:postId" element={<NoticePostDetail />} />
-        <Route path="/study" element={<StudyBoard />} />
-        <Route path="/study/:postId" element={<StudyPostDetail />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/board/:postId" element={<BoardPostDetail />} />
         <Route path="/:type/post" element={<BoardPost />} />
 
         <Route path="/admin/attendance" element={<AdminAttendance />} />

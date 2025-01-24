@@ -57,14 +57,14 @@ const HomeMain: React.FC = () => {
             navi(`/attendance`);
           }}
         >
-          출석 패널티
+          출석
           <S.PlaceholderImage>
             <img src={attend} alt="출석 이미지" />
           </S.PlaceholderImage>
         </S.PenaltyItem>
         <S.BoardItem
           onClick={() => {
-            navi(`/notice`);
+            navi(`/board`);
           }}
         >
           게시판

@@ -5,7 +5,8 @@ import styled from 'styled-components';
 export const PostMainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px 23px 0 23px;
+  margin: 5px 23px 0 23px;
+  font-family: ${theme.font.regular};
 `;
 
 export const PostMainTitleText = styled.div`
@@ -19,6 +20,7 @@ export const SmallText = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 10px;
+  align-items: center;
 `;
 
 export const DateText = styled.div`
@@ -34,6 +36,11 @@ export const CommentText = styled.div`
   font-family: ${theme.font.semiBold};
   margin: 14px 0 10px 0;
 `;
+export const PositionIcon = styled.img`
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
+`;
 
 export const PostingContianer = styled.div`
   font-family: ${theme.font.regular};
@@ -41,47 +48,4 @@ export const PostingContianer = styled.div`
   line-height: 19.09px;
   white-space: pre-wrap;
   margin: 20px 0 20px 0;
-`;
-
-// Info
-
-export const InfoContainer = styled.div`
-  margin: 0 25px 0 24px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-export const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-export const InfoTitleText = styled.div`
-  margin-top: 20px;
-  font-size: 16px;
-  font-family: ${theme.font.semiBold};
-  line-height: 19.09px;
-`;
-
-export const InfoText = styled.div`
-  margin-top: 10px;
-  font-size: 12px;
-`;
-
-export const PostingButton = styled.button`
-  width: calc(370px * 0.13);
-  height: 28px;
-  margin-top: auto;
-  background-color: ${theme.color.main};
-  color: ${theme.color.gray[100]};
-  border: none;
-  font-size: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-family: ${theme.font.semiBold};
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

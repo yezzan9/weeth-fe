@@ -1,14 +1,17 @@
 import CommentImage from '@/assets/images/ic_comment_count.svg';
-import { formatDate } from 'fullcalendar';
 import * as S from '@/styles/board/PostDetail.styled';
-import Line from '../common/Line';
-import PostFile from './PostFile';
+import Line from '@/components/common/Line';
+import PostFile from '@/components/Board/PostFile';
+import formatDateTime from '@/hooks/formatDateTime';
+import setPositionIcon from '@/hooks/setPositionIcon';
 
 interface Comment {
   id: number;
   name: string;
   content: string;
   time: string;
+  position: string;
+  role: string;
 }
 
 interface FileUrl {
@@ -23,6 +26,8 @@ interface BoardDetail {
   title: string;
   time: string;
   content: string;
+  position: string;
+  role: string;
   commentCount: number;
   comments: Comment[];
   fileUrls: FileUrl[];
@@ -65,13 +70,7 @@ const onClickDownload = async (fileName: string, fileUrl: string) => {
 };
 
 const PostDetailMain = ({ info }: PostDetailMainProps) => {
-  const formattedDate = info?.time
-    ? formatDate(new Date(info.time), {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      })
-    : 'Invalid Date';
+  const formattedDate = formatDateTime(info?.time ?? '');
 
   if (!info) return <div>Loading...</div>;
 
@@ -79,6 +78,10 @@ const PostDetailMain = ({ info }: PostDetailMainProps) => {
     <S.PostMainContainer>
       <S.PostMainTitleText>{info.title}</S.PostMainTitleText>
       <S.SmallText>
+        <S.PositionIcon
+          src={setPositionIcon(info.role, info.position)}
+          alt="포지션 아이콘"
+        />
         <div>{info.name}</div>
         <S.DateText>{formattedDate}</S.DateText>
       </S.SmallText>

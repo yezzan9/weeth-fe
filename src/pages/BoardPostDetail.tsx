@@ -35,7 +35,7 @@ const CommentInputContainer = styled.div`
   justify-content: center;
 `;
 
-const StudyPostDetail = () => {
+const BoardPostDetail = () => {
   const path = 'posts';
   const { postId } = useParams();
 
@@ -159,4 +159,4 @@ const StudyPostDetail = () => {
   );
 };
 
-export default StudyPostDetail;
+export default BoardPostDetail;

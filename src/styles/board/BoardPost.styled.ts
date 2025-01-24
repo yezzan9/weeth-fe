@@ -13,8 +13,6 @@ export const PostWrapper = styled.div`
 `;
 
 export const FileUploaderWrapper = styled.div`
-  // display: flex;
-  // flex-direction: row;
   margin-left: 20px;
   align-items: flex-start;
   top: calc(var(--vh, 1vh) * 40 + 120px);
@@ -29,6 +27,7 @@ export const TitleInput = styled.input`
   color: white;
   font-size: 16px;
   font-family: ${theme.font.semiBold};
+
   &::placeholder {
     font-size: 16px;
     font-family: ${theme.font.semiBold};
