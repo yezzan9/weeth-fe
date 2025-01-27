@@ -22,7 +22,9 @@ interface MemberContextProps {
   members: MemberData[]; // 전체 멤버 데이터
   setMembers: React.Dispatch<React.SetStateAction<MemberData[]>>;
   selectedMembers: string[]; // 선택된 멤버 ID 리스트
+  filteredMembers: MemberData[];
   setSelectedMembers: React.Dispatch<React.SetStateAction<string[]>>;
+  setFilteredMembers: React.Dispatch<React.SetStateAction<MemberData[]>>;
 }
 
 // context 생성
@@ -70,7 +72,7 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     {
       status: '승인 완료',
-      name: '최위드니',
+      name: '송위드니',
       role: '백엔드',
       major: '컴퓨터공학과',
       cardinal: '4.3',
@@ -90,7 +92,7 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
       name: '홍위드니',
       role: '백엔드',
       major: '컴퓨터공학과',
-      cardinal: '4.3',
+      cardinal: '3.2',
       phone: '01000009999',
       studentId: '202331423',
       position: '사용자',
@@ -107,7 +109,7 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
       name: '최위드니',
       role: '백엔드',
       major: '컴퓨터공학과',
-      cardinal: '4.3',
+      cardinal: '2.1',
       phone: '01000009999',
       studentId: '202436123',
       position: '사용자',
@@ -120,14 +122,18 @@ export const MemberProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
 
+  const [filteredMembers, setFilteredMembers] = useState<MemberData[]>(members);
+
   const value = useMemo(
     () => ({
       members,
       setMembers,
       selectedMembers,
       setSelectedMembers,
+      filteredMembers,
+      setFilteredMembers,
     }),
-    [members, selectedMembers],
+    [members, selectedMembers, filteredMembers],
   );
 
   return (

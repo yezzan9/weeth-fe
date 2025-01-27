@@ -1,12 +1,14 @@
 import theme from '@/styles/theme';
 import styled from 'styled-components';
-import AddCardinal from '@/components/Admin/Modal/AddCardinal';
+import AddCardinal from '@/components/Admin/AddCardinal';
 import { BoxWrapper } from './TotalDues';
 import Box from './Box';
 
 const CardinalBoxWrapper = styled(BoxWrapper)`
-  padding: 30px 0 30px 0;
+  padding: 0 0 30px 0;
+  box-sizing: border-box;
 `;
+
 const boxData = [
   {
     id: 'cardinal-total',
@@ -18,28 +20,28 @@ const boxData = [
     id: 'cardinal-4',
     title: '24년 2학기(현재)',
     description: '4기',
-    last: '동장 노정완 외 25명',
+    last: '노정완 외 25명',
     color: `${theme.color.gray[65]}`,
   },
   {
     id: 'cardinal-3',
     title: '24년 1학기',
     description: '3기',
-    last: '동장 김성민 외 25명',
+    last: '김성민 외 25명',
     color: `${theme.color.gray[65]}`,
   },
   {
     id: 'cardinal-2',
     title: '23년 2학기',
     description: '2기',
-    last: '동장 김성민 외 25명',
+    last: '김성민 외 25명',
     color: `${theme.color.gray[65]}`,
   },
   {
     id: 'cardinal-1',
     title: '23년 1학기',
     description: '1기',
-    last: '동장 김성민 외 25명',
+    last: '김성민 외 25명',
     color: `${theme.color.gray[65]}`,
   },
 ];

@@ -23,7 +23,7 @@ export const StatusCell = styled.td<{ statusColor: string }>`
   background-color: ${({ statusColor }) => statusColor};
 `;
 
-const SvgWrapper = styled.td`
+export const SvgWrapper = styled.td`
   padding: 10px;
   text-align: center;
   cursor: pointer;

@@ -20,6 +20,7 @@ export const MenuItemWrapper = styled.div<{ active?: boolean }>`
 
 export const Label = styled.div`
   padding-left: 12px;
+  font-weight: 700;
 `;
 
 export const Icon = styled.div<{ active?: boolean }>`

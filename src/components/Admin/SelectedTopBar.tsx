@@ -1,11 +1,11 @@
 import theme from '@/styles/theme';
 import backarrow from '@/assets/images/ic_admin_backarrow.svg';
-import checkIcon from '@/assets/images/ic_admin_circle_check.svg';
-import dropdownIcon from '@/assets/images/ic_admin_column_meatball.svg';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useMemberContext } from './context/MemberContext';
 import { Title } from './TopBar';
 import ButtonGroup from './ButtonGroup';
+import CardinalEditModal from './Modal/CardinalEditModal';
 
 const SelectedTopBarWrapper = styled.div`
   width: 100%;
@@ -32,9 +32,18 @@ const SvgIcon = styled.img`
 
 const SelectedTopBar: React.FC = () => {
   const { selectedMembers, setSelectedMembers } = useMemberContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBackClick = () => {
     setSelectedMembers([]);
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
   const buttons = [
     {
@@ -74,27 +83,33 @@ const SelectedTopBar: React.FC = () => {
       disabled: false,
     },
     {
-      label: '변경 기수',
-      onClick: () => alert('기수를 변경하시겠습니까?'),
+      label: '기수 변경',
+      onClick: handleOpenModal,
       disabled: false,
-      icon: checkIcon,
-    },
-    {
-      label: '직접 입력',
-      onClick: () => alert('직접 입력 기능을 실행합니다.'), // 나중에 수정
-      disabled: false,
-      icon: dropdownIcon,
     },
   ];
 
   return (
-    <SelectedTopBarWrapper>
-      <TitleContainer>
-        <SvgIcon src={backarrow} alt="뒤로가기" onClick={handleBackClick} />
-        <Title>{`${selectedMembers.length}명 선택됨`}</Title>
-      </TitleContainer>
-      <ButtonGroup buttons={buttons} />
-    </SelectedTopBarWrapper>
+    <>
+      <SelectedTopBarWrapper>
+        <TitleContainer>
+          <SvgIcon src={backarrow} alt="뒤로가기" onClick={handleBackClick} />
+          <Title>{`${selectedMembers.length}명 선택됨`}</Title>
+        </TitleContainer>
+        <ButtonGroup buttons={buttons} />
+      </SelectedTopBarWrapper>
+
+      {isModalOpen && (
+        <CardinalEditModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          top="70px"
+          left="75%"
+          position="absolute"
+          overlayColor="transparent"
+        />
+      )}
+    </>
   );
 };
 

@@ -23,8 +23,8 @@ const columns = [
 ];
 
 const PenaltyListTable: React.FC = () => {
-  const { members } = useMemberContext();
-  const filteredMembers = members.filter(
+  const { filteredMembers } = useMemberContext();
+  const StatusfilteredMembers = filteredMembers.filter(
     (member) => member.status === '승인 완료',
   );
 
@@ -101,7 +101,7 @@ const PenaltyListTable: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredMembers.map((member) => (
+            {StatusfilteredMembers.map((member) => (
               <React.Fragment key={member.studentId}>
                 <S.Row onClick={() => handleRowClick(member.studentId)}>
                   <StatusCell statusColor={statusColors[member.status]} />

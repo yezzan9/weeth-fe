@@ -13,14 +13,14 @@ const SortButtonWrapper = styled.div`
 `;
 const SortButton: React.FC = () => {
   const [isAscending, setIsAscending] = useState(false);
+
   const onClickSort = () => {
     setIsAscending(!isAscending);
   };
-
   return (
     <SortButtonWrapper onClick={onClickSort}>
       {isAscending ? '오름차순' : '기수 순'}
-      <img src={SortIcon} alt="정렬" />
+      <img src={SortIcon} alt="sorting" />
     </SortButtonWrapper>
   );
 };

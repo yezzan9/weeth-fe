@@ -52,7 +52,7 @@ const Footer = styled.div`
   bottom: 0;
 `;
 
-const CloseIcon = styled.img`
+export const CloseIcon = styled.img`
   cursor: pointer;
   margin-right: 20px;
 `;
