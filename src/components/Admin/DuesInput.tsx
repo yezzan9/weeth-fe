@@ -3,7 +3,9 @@ import theme from '@/styles/theme';
 
 interface InputProps {
   width: string;
-  placeholder: string;
+  placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Wrapper = styled.div``;
@@ -28,10 +30,20 @@ const Input = styled.input<InputProps>`
   }
 `;
 
-const DuesInput: React.FC<InputProps> = ({ width, placeholder }) => {
+const DuesInput: React.FC<InputProps> = ({
+  width,
+  placeholder,
+  value,
+  onChange,
+}) => {
   return (
     <Wrapper>
-      <Input width={width} placeholder={placeholder} />
+      <Input
+        width={width}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
     </Wrapper>
   );
 };

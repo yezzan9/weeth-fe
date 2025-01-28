@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   box-sizing: border-box;
   border-radius: 5px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
   padding-bottom: 30px;
   margin-bottom: 30px;
 `;
@@ -32,6 +33,7 @@ export const SubTitle = styled.div`
   font-family: ${theme.font.regular};
   font-size: 16px;
   padding: 20px 30px;
+  color: black;
 `;
 
 export const CardinalWrapper = styled.div`

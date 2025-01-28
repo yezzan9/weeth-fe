@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 import Receipt from '@/assets/images/ic_admin_receipt.svg';
+import { useState } from 'react';
 import Button from './Button';
+import DuesModifyModal from './Modal/DuesModifyModal';
 
 interface ExpenditureRecordProps {
-  date: string;
-  title: string;
-  money: number;
-  master: string;
+  date?: string;
+  title?: string;
+  money?: number;
+  master?: string;
 }
 
 const data: ExpenditureRecordProps[] = [
@@ -80,7 +82,14 @@ const ExpenditureMaster = styled.div`
   justify-content: space-between;
 `;
 
+const ModifyButton = styled.div``;
+
 const ExpenditureRecord: React.FC<ExpenditureRecordProps> = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <Container>
       {data.map((item) => (
@@ -88,7 +97,10 @@ const ExpenditureRecord: React.FC<ExpenditureRecordProps> = () => {
           <DateWrapper>
             <Date>{item.date}</Date>
             <ButtonWrapper>
-              <Button description="수정" color="#323232" width="64px" />
+              <ModifyButton onClick={openModal}>
+                <Button description="수정" color="#323232" width="64px" />
+              </ModifyButton>
+
               <Button description="삭제" color="#ff5858" width="64px" />
             </ButtonWrapper>
           </DateWrapper>
@@ -104,6 +116,7 @@ const ExpenditureRecord: React.FC<ExpenditureRecordProps> = () => {
           </ExpenditureWrapper>
         </Wrapper>
       ))}
+      {isModalOpen && <DuesModifyModal onClose={closeModal} />}
     </Container>
   );
 };

@@ -61,6 +61,8 @@ const DuesRegisterWrapper = styled.div`
   width: 50%;
 `;
 
+const CardinalButtonWrapper = styled.div``;
+
 const AdminDues: React.FC = () => {
   const [selectedCardinal, setSelectedCardinal] = useState('기수');
 
@@ -81,6 +83,8 @@ const AdminDues: React.FC = () => {
     }
   };
 
+  const cardinal = 1;
+
   return (
     <PageWrapper>
       <NavMenu />
@@ -92,13 +96,15 @@ const AdminDues: React.FC = () => {
         <Wrapper>
           <Container>
             <CardinalWrapper>
-              <Cardinal
-                selectedCardinal={selectedCardinal}
-                setSelectedCardinal={setSelectedCardinal}
-              />
+              <CardinalButtonWrapper>
+                <Cardinal
+                  selectedCardinal={selectedCardinal}
+                  setSelectedCardinal={setSelectedCardinal}
+                />
+              </CardinalButtonWrapper>
             </CardinalWrapper>
             <DuesWrapper>
-              <TotalDues getDuesText={getDuesText} />
+              <TotalDues getDuesText={getDuesText} cardinal={cardinal} />
               <Expenditure />
             </DuesWrapper>
           </Container>

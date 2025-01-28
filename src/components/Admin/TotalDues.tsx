@@ -5,10 +5,13 @@ import {
   TopDues,
   Title,
 } from '@/styles/admin/TotalDues.styled';
+import { fetchAccountData, AccountResponse } from '@/api/admin/dues/account';
+import { useEffect, useState } from 'react';
 import Box from './Box';
 
 interface TotalDuesProps {
   getDuesText: () => string;
+  cardinal: number;
 }
 
 export const BoxWrapper = styled.div`
@@ -32,8 +35,8 @@ const InsideDues = styled.div`
   justify-content: space-evenly;
 `;
 
-const TotalDues: React.FC<TotalDuesProps> = ({ getDuesText }) => {
-  const boxData = [
+const TotalDues: React.FC<TotalDuesProps> = ({ getDuesText, cardinal }) => {
+  const [boxData, setBoxData] = useState([
     {
       id: 'box1',
       title: '원금',
@@ -55,7 +58,49 @@ const TotalDues: React.FC<TotalDuesProps> = ({ getDuesText }) => {
       last: '0000.00.00. 00:00',
       color: '#2f2f2f',
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response: AccountResponse = await fetchAccountData(cardinal);
+
+        if (response.code === 200) {
+          const { totalAmount, currentAmount, time } = response.data;
+
+          setBoxData([
+            {
+              id: 'box1',
+              title: '원금',
+              description: `${totalAmount}원`,
+              last: new Date(time).toLocaleString(),
+              color: '#00DDA8',
+            },
+            {
+              id: 'box2',
+              title: '현재',
+              description: `${currentAmount}원`,
+              last: new Date(time).toLocaleString(),
+              color: '#2f2f2f',
+            },
+            {
+              id: 'box3',
+              title: '사용',
+              description: `${totalAmount - currentAmount}원`,
+              last: new Date(time).toLocaleString(),
+              color: '#2f2f2f',
+            },
+          ]);
+        } else {
+          console.error('API 요청 실패:', response.message);
+        }
+      } catch (error) {
+        console.error('데이터 가져오기 에러:', error);
+      }
+    };
+
+    getData();
+  }, [cardinal]);
 
   return (
     <TotalDuesWrapper>

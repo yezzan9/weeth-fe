@@ -42,11 +42,12 @@ const ModalContent = styled.div`
   gap: 20px;
   padding: 15px;
   flex: 1.5;
-  margin-top: 50px;
+  margin-top: 20%;
 `;
 
 const ActivityContent = styled(ModalContent)`
   flex: 1;
+  margin-bottom: 6%;
 `;
 
 const FlexWrapper = styled.div`

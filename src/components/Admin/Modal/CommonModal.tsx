@@ -17,6 +17,7 @@ const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  z-index: 4;
 `;
 
 const Title = styled.div`
@@ -26,6 +27,7 @@ const Title = styled.div`
   font-size: 24px;
   padding-left: 20px;
 `;
+
 const TitleContainer = styled.div`
   background-color: #f2f9f8;
   width: 100%;
@@ -33,12 +35,16 @@ const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
 `;
 
 const MainContent = styled.div`
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 `;
 
 const Footer = styled.div`
@@ -48,8 +54,9 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
   padding-left: 20px;
-  position: absolute;
+  position: relative;
   bottom: 0;
+  flex-shrink: 0;
 `;
 
 const CloseIcon = styled.img`
